@@ -100,31 +100,36 @@ function init3DBackground() {
     });
 }
 
-// Create Floating 3D Particles
+// Create Floating 3D Particles with Enhanced Effects
 function create3DParticles() {
     const container = document.body;
-    const particleCount = 20;
+    const particleCount = 30;
 
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'floating-particle particle-3d';
         
-        const size = Math.random() * 4 + 2;
-        const color = `hsl(${Math.random() * 60 + 240}, 100%, ${Math.random() * 30 + 60}%)`;
-        const duration = Math.random() * 20 + 20;
-        const delay = Math.random() * 5;
+        const size = Math.random() * 6 + 2;
+        const hue = Math.random() * 120 + 200;
+        const saturation = Math.random() * 50 + 50;
+        const lightness = Math.random() * 40 + 50;
+        const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        const duration = Math.random() * 25 + 20;
+        const delay = Math.random() * 8;
+        const xDrift = Math.random() * 200 - 100;
+        const yDrift = Math.random() * 300 - 150;
         
         particle.style.cssText = `
             width: ${size}px;
             height: ${size}px;
-            background: radial-gradient(circle at 30% 30%, ${color}, rgba(100, 100, 200, 0.5));
+            background: radial-gradient(circle at 30% 30%, ${color}, rgba(100, 150, 255, 0.3));
             border-radius: 50%;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
-            box-shadow: 0 0 ${size * 2}px ${color};
-            animation-duration: ${duration}s;
-            animation-delay: ${delay}s;
-            opacity: 0.6;
+            box-shadow: 0 0 ${size * 3}px ${color}, inset -2px -2px ${size}px rgba(0,0,0,0.2);
+            animation: float3d ${duration}s ease-in-out infinite, drift ${duration * 1.5}s ease-in-out infinite;
+            animation-delay: ${delay}s, ${delay * 0.8}s;
+            opacity: ${Math.random() * 0.3 + 0.4};
         `;
         
         container.appendChild(particle);
@@ -544,6 +549,43 @@ document.querySelectorAll('img').forEach(img => {
     });
 });
 
+// Enhanced 3D Scroll Animation for Elements
+function init3DScrollAnimations() {
+    const scrollElements = document.querySelectorAll('[data-scroll="3d"]');
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    scrollElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'perspective(1000px) rotateX(20deg) rotateY(20deg) translateZ(-50px)';
+        el.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        scrollObserver.observe(el);
+    });
+}
+
+// Advanced Mouse Tracking for 3D Depth
+function init3DMouseTracking() {
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX / window.innerWidth;
+        const y = e.clientY / window.innerHeight;
+        
+        // Apply subtle 3D effect to main sections
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            const rotX = (y - 0.5) * 5;
+            const rotY = (x - 0.5) * 5;
+            section.style.transform = `perspective(1000px) rotateX(${rotX * 0.1}deg) rotateY(${rotY * 0.1}deg)`;
+        });
+    });
+}
+
 // Initialize 3D Effects
 window.addEventListener('load', () => {
     try {
@@ -553,7 +595,48 @@ window.addEventListener('load', () => {
     }
     
     create3DParticles();
+    init3DScrollAnimations();
+    init3DMouseTracking();
 });
+
+// Enhanced Parallax with Multiple Layers
+function enhancedParallax() {
+    const scrolled = window.pageYOffset;
+    
+    // Hero parallax
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.style.transform = `perspective(1000px) translateZ(${scrolled * 0.2}px) translateY(${scrolled * 0.3}px)`;
+    }
+    
+    // Project cards parallax
+    const projectCards = document.querySelectorAll('.project-card-3d');
+    projectCards.forEach((card, index) => {
+        const offset = (scrolled * 0.15) + (index * 20);
+        card.style.transform = `translateY(${offset}px) perspective(1000px)`;
+    });
+}
+
+window.addEventListener('scroll', enhancedParallax, { passive: true });
+
+// Scroll-triggered text animation
+function initScrollTextAnimations() {
+    const textElements = document.querySelectorAll('.hero-title, .section-title, .hero-subtitle');
+    
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'neon-glow 3s ease-in-out infinite';
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    textElements.forEach(el => {
+        textObserver.observe(el);
+    });
+}
+
+initScrollTextAnimations();
 
 // Console welcome message
 console.log('%c🎨 Welcome to Robert\'s 3D Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
