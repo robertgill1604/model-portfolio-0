@@ -319,6 +319,7 @@ body {
 /* Section Styles */
 section {
     padding: 100px 0;
+    position: relative;
 }
 
 .section-title {
@@ -509,12 +510,15 @@ section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2.5rem;
+    align-items: stretch;
 }
 
 /* 3D Project Cards */
 .project-card-3d {
     perspective: 1000px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card {
@@ -524,6 +528,8 @@ section {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card.flip-card {
@@ -545,6 +551,7 @@ section {
     height: 250px;
     overflow: hidden;
     backface-visibility: hidden;
+    flex-shrink: 0;
 }
 
 .project-image img {
@@ -561,10 +568,11 @@ section {
 .project-content {
     padding: 1.5rem;
     backface-visibility: hidden;
-    min-height: 250px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
+    flex-grow: 1;
 }
 
 .project-content h3 {
@@ -598,6 +606,8 @@ section {
 .project-links {
     display: flex;
     gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
 }
 
 .project-link {
@@ -621,8 +631,9 @@ section {
 
 .education-timeline {
     position: relative;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .education-timeline::before {
@@ -639,17 +650,21 @@ section {
 .timeline-item {
     position: relative;
     margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
 }
 
 .timeline-item:nth-child(odd) .timeline-content {
     margin-right: 50%;
-    padding-right: 2rem;
+    padding-right: 2.5rem;
     text-align: right;
+    align-self: flex-start;
 }
 
 .timeline-item:nth-child(even) .timeline-content {
     margin-left: 50%;
-    padding-left: 2rem;
+    padding-left: 2.5rem;
+    align-self: flex-start;
 }
 
 .timeline-content {
@@ -658,6 +673,8 @@ section {
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     position: relative;
+    width: calc(50% - 2rem);
+    min-height: 200px;
 }
 
 .timeline-item::before {
@@ -1058,6 +1075,7 @@ section {
     
     .projects-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
     
     .contact-content {
@@ -1080,6 +1098,8 @@ section {
         padding-left: 2rem;
         padding-right: 2rem;
         text-align: left;
+        width: calc(100% - 60px);
+        min-height: auto;
     }
     
     .hero-title {
@@ -1186,6 +1206,8 @@ section {
     .timeline-item:nth-child(odd) .timeline-content,
     .timeline-item:nth-child(even) .timeline-content {
         margin-left: 50px;
+        width: calc(100% - 50px);
+        min-height: auto;
     }
     
     .education-timeline::before {
