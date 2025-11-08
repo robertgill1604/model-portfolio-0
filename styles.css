@@ -258,6 +258,55 @@ body {
     margin-top: 0.5rem;
 }
 
+/* 3D Profile Card */
+.profile-card-3d {
+    perspective: 1000px;
+    width: 250px;
+    height: 300px;
+}
+
+.profile-cube {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+}
+
+.profile-card-3d:hover .profile-cube {
+    transform: rotateY(180deg);
+}
+
+.cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cube-face.front {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
+
+.cube-face.back {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    transform: rotateY(180deg);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cube-face.back .profile-info {
+    text-align: center;
+    padding: 2rem;
+}
+
 /* Section Styles */
 section {
     padding: 100px 0;
@@ -396,10 +445,11 @@ section {
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    perspective: 1000px;
 }
 
 .skill-category:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) rotateX(5deg);
 }
 
 .skill-category h3 {
@@ -452,16 +502,32 @@ section {
     gap: 2.5rem;
 }
 
+/* 3D Project Cards */
+.project-card-3d {
+    perspective: 1000px;
+    height: 100%;
+}
+
 .project-card {
     background: white;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.project-card.flip-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.project-card.flip-card:hover {
+    transform: rotateY(180deg);
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
@@ -469,6 +535,7 @@ section {
     width: 100%;
     height: 250px;
     overflow: hidden;
+    backface-visibility: hidden;
 }
 
 .project-image img {
@@ -478,12 +545,17 @@ section {
     transition: transform 0.3s ease;
 }
 
-.project-card:hover .project-image img {
-    transform: scale(1.1);
+.project-card.flip-card:hover .project-image img {
+    display: none;
 }
 
 .project-content {
     padding: 1.5rem;
+    backface-visibility: hidden;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .project-content h3 {
@@ -769,6 +841,135 @@ section {
 
 .footer-content p {
     margin-bottom: 0.5rem;
+}
+
+/* 3D Canvas */
+#canvas3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 3D Floating Particles */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px);
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px);
+    }
+    50% {
+        transform: translateY(-40px) translateX(-10px);
+    }
+    75% {
+        transform: translateY(-20px) translateX(10px);
+    }
+}
+
+@keyframes rotate3d {
+    0% {
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+@keyframes pulse-3d {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.floating-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle-3d {
+    animation: float 20s infinite ease-in-out;
+}
+
+/* 3D Section Titles */
+.section-title {
+    perspective: 1000px;
+}
+
+/* 3D Text Effect */
+.text-3d {
+    text-shadow: 
+        2px 2px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 0px rgba(0, 0, 0, 0.08),
+        6px 6px 0px rgba(0, 0, 0, 0.06),
+        8px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced 3D Effects */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.stat {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.skill-progress {
+    animation: progressFill 1s ease-out;
+}
+
+@keyframes progressFill {
+    from {
+        width: 0 !important;
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+    }
+    to {
+        box-shadow: 0 0 0px rgba(102, 126, 234, 0.5);
+    }
+}
+
+/* Project card depth effect */
+.project-card-3d:hover .project-card {
+    box-shadow: 0 20px 60px rgba(79, 70, 229, 0.3);
+}
+
+/* Enhanced profile cube animation */
+.profile-img {
+    animation: profilePulse 3s ease-in-out infinite;
+}
+
+@keyframes profilePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 /* Responsive Design */

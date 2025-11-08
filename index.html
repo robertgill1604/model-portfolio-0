@@ -9,8 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+    <!-- 3D Canvas for Hero Background -->
+    <canvas id="canvas3d"></canvas>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -68,13 +72,19 @@
                 </div>
             </div>
             <div class="hero-image">
-                <div class="profile-card">
-                    <div class="profile-img">
-                        <img src="https://via.placeholder.com/300x300/4F46E5/FFFFFF?text=AK" alt="Profile">
-                    </div>
-                    <div class="profile-info">
-                        <h3>Robert</h3>
-                        <p>Full Stack Developer</p>
+                <div class="profile-card-3d">
+                    <div class="profile-cube">
+                        <div class="cube-face front">
+                            <div class="profile-img">
+                                <img src="https://via.placeholder.com/300x300/4F46E5/FFFFFF?text=AK" alt="Profile">
+                            </div>
+                        </div>
+                        <div class="cube-face back">
+                            <div class="profile-info">
+                                <h3>Robert</h3>
+                                <p>Full Stack Developer</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,79 +243,87 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://via.placeholder.com/400x250/4F46E5/FFFFFF?text=TechMart" alt="E-Commerce Platform">
-                    </div>
-                    <div class="project-content">
-                        <h3>TechMart - E-Commerce Platform</h3>
-                        <p>Production-ready e-commerce platform with advanced features including real-time inventory, payment processing, and admin dashboard. Deployed on AWS with 99.9% uptime.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React.js</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">Stripe</span>
+                <div class="project-card-3d">
+                    <div class="project-card flip-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250/4F46E5/FFFFFF?text=TechMart" alt="E-Commerce Platform">
                         </div>
-                        <div class="project-links">
-                            <a href="https://techmart-demo.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/adityakumar/techmart" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://via.placeholder.com/400x250/10B981/FFFFFF?text=TaskFlow" alt="Task Manager">
-                    </div>
-                    <div class="project-content">
-                        <h3>TaskFlow - Collaboration Suite</h3>
-                        <p>Real-time collaborative task management platform with WebSocket integration, allowing teams to work seamlessly. Features include Kanban boards, time tracking, and notifications.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">Socket.io</span>
-                            <span class="tech-tag">Tailwind CSS</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://taskflow-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/adityakumar/taskflow" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        <div class="project-content">
+                            <h3>TechMart - E-Commerce Platform</h3>
+                            <p>Production-ready e-commerce platform with advanced features including real-time inventory, payment processing, and admin dashboard. Deployed on AWS with 99.9% uptime.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React.js</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Stripe</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://techmart-demo.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="https://github.com/adityakumar/techmart" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://via.placeholder.com/400x250/F59E0B/FFFFFF?text=WeatherPro" alt="Weather App">
-                    </div>
-                    <div class="project-content">
-                        <h3>WeatherPro - Forecast Intelligence</h3>
-                        <p>Mobile-first weather application with AI-powered predictions, severe weather alerts, and interactive maps. 50K+ downloads with 4.8 rating on app stores.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React Native</span>
-                            <span class="tech-tag">OpenWeather API</span>
-                            <span class="tech-tag">Redux</span>
-                            <span class="tech-tag">Geolocation</span>
+                <div class="project-card-3d">
+                    <div class="project-card flip-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250/10B981/FFFFFF?text=TaskFlow" alt="Task Manager">
                         </div>
-                        <div class="project-links">
-                            <a href="https://weatherpro-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/adityakumar/weatherpro" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        <div class="project-content">
+                            <h3>TaskFlow - Collaboration Suite</h3>
+                            <p>Real-time collaborative task management platform with WebSocket integration, allowing teams to work seamlessly. Features include Kanban boards, time tracking, and notifications.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Socket.io</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://taskflow-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="https://github.com/adityakumar/taskflow" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://via.placeholder.com/400x250/EF4444/FFFFFF?text=ChatConnect" alt="Chat Application">
-                    </div>
-                    <div class="project-content">
-                        <h3>ChatConnect - Real-Time Messaging</h3>
-                        <p>Enterprise-grade messaging platform with end-to-end encryption, video/audio calls, file sharing, and group management. GDPR compliant with sub-100ms latency.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Socket.io</span>
-                            <span class="tech-tag">WebRTC</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">Docker</span>
+                <div class="project-card-3d">
+                    <div class="project-card flip-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250/F59E0B/FFFFFF?text=WeatherPro" alt="Weather App">
                         </div>
-                        <div class="project-links">
-                            <a href="https://chatconnect-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                            <a href="https://github.com/adityakumar/chatconnect" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        <div class="project-content">
+                            <h3>WeatherPro - Forecast Intelligence</h3>
+                            <p>Mobile-first weather application with AI-powered predictions, severe weather alerts, and interactive maps. 50K+ downloads with 4.8 rating on app stores.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React Native</span>
+                                <span class="tech-tag">OpenWeather API</span>
+                                <span class="tech-tag">Redux</span>
+                                <span class="tech-tag">Geolocation</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://weatherpro-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="https://github.com/adityakumar/weatherpro" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card-3d">
+                    <div class="project-card flip-card">
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250/EF4444/FFFFFF?text=ChatConnect" alt="Chat Application">
+                        </div>
+                        <div class="project-content">
+                            <h3>ChatConnect - Real-Time Messaging</h3>
+                            <p>Enterprise-grade messaging platform with end-to-end encryption, video/audio calls, file sharing, and group management. GDPR compliant with sub-100ms latency.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Socket.io</span>
+                                <span class="tech-tag">WebRTC</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="https://chatconnect-app.com" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                <a href="https://github.com/adityakumar/chatconnect" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
                         </div>
                     </div>
                 </div>
