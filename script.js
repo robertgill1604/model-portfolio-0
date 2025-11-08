@@ -217,11 +217,13 @@ navLinks.forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            const offsetTop = target.offsetTop - 70; // Adjust for fixed navbar
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
             });
         }
     });
@@ -318,26 +320,6 @@ if (skillsSection) {
     skillObserver.observe(skillsSection);
 }
 
-// Animate Elements on Scroll
-const animateOnScroll = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-// Apply initial styles and observe elements
-document.querySelectorAll('.project-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    animateOnScroll.observe(el);
-});
 
 // Contact Form Handling
 const contactForm = document.getElementById('contactForm');
@@ -385,39 +367,6 @@ function showFormMessage(message, type) {
 
 // Hero parallax handled in enhancedParallax()
 
-// Project Card 3D Hover Effect (Mouse Tracking)
-document.querySelectorAll('.project-card-3d').forEach(cardContainer => {
-    const card = cardContainer.querySelector('.project-card');
-    
-    cardContainer.addEventListener('mousemove', function(e) {
-        const rect = cardContainer.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-    
-    cardContainer.addEventListener('mouseleave', function() {
-        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    });
-});
-
-// Add glow effect to social links
-document.querySelectorAll('.social-link, .social-icon').forEach(link => {
-    link.addEventListener('mouseenter', function() {
-        this.style.boxShadow = '0 0 20px rgba(79, 70, 229, 0.5)';
-    });
-    
-    link.addEventListener('mouseleave', function() {
-        this.style.boxShadow = 'none';
-    });
-});
 
 // Counter Animation for Stats
 function animateCounter(element, target, duration = 2000) {
