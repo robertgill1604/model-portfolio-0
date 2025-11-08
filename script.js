@@ -1,3 +1,136 @@
+// ============================================
+// 3D ANIMATIONS AND EFFECTS
+// ============================================
+
+// Initialize Three.js 3D Background
+function init3DBackground() {
+    const canvas = document.getElementById('canvas3d');
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    // Create 3D Objects
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshPhongMaterial({
+        color: 0x667eea,
+        emissive: 0x764ba2,
+        wireframe: false,
+        transparent: true,
+        opacity: 0.7
+    });
+
+    const cubes = [];
+    for (let i = 0; i < 5; i++) {
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.x = (Math.random() - 0.5) * 20;
+        cube.position.y = (Math.random() - 0.5) * 20;
+        cube.position.z = (Math.random() - 0.5) * 20;
+        cube.rotation.x = Math.random() * 2 * Math.PI;
+        cube.rotation.y = Math.random() * 2 * Math.PI;
+        scene.add(cube);
+        cubes.push({
+            mesh: cube,
+            rotationSpeed: {
+                x: (Math.random() - 0.5) * 0.01,
+                y: (Math.random() - 0.5) * 0.01,
+                z: (Math.random() - 0.5) * 0.01
+            }
+        });
+    }
+
+    // Add Lights
+    const light1 = new THREE.PointLight(0xfbbf24, 1);
+    light1.position.set(5, 5, 5);
+    scene.add(light1);
+
+    const light2 = new THREE.PointLight(0x667eea, 0.5);
+    light2.position.set(-5, -5, 5);
+    scene.add(light2);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+
+    // Mouse position tracking
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+
+    // Animation Loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        cubes.forEach(cube => {
+            cube.mesh.rotation.x += cube.rotationSpeed.x;
+            cube.mesh.rotation.y += cube.rotationSpeed.y;
+            cube.mesh.rotation.z += cube.rotationSpeed.z;
+
+            cube.mesh.position.x += (mouseX * 10 - cube.mesh.position.x) * 0.01;
+            cube.mesh.position.y += (mouseY * 10 - cube.mesh.position.y) * 0.01;
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+}
+
+// Create Floating 3D Particles
+function create3DParticles() {
+    const container = document.body;
+    const particleCount = 20;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'floating-particle particle-3d';
+        
+        const size = Math.random() * 4 + 2;
+        const color = `hsl(${Math.random() * 60 + 240}, 100%, ${Math.random() * 30 + 60}%)`;
+        const duration = Math.random() * 20 + 20;
+        const delay = Math.random() * 5;
+        
+        particle.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            background: radial-gradient(circle at 30% 30%, ${color}, rgba(100, 100, 200, 0.5));
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            box-shadow: 0 0 ${size * 2}px ${color};
+            animation-duration: ${duration}s;
+            animation-delay: ${delay}s;
+            opacity: 0.6;
+        `;
+        
+        container.appendChild(particle);
+    }
+}
+
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -64,7 +197,7 @@ window.addEventListener('scroll', () => {
 
 // Typing Animation for Hero Title
 function typeWriter() {
-    const text = "Hi, I'm Aditya Kumar";
+    const text = "Hi, I'm Robert";
     const heroTitle = document.querySelector('.hero-title');
     const textArray = text.split('');
     let index = 0;
@@ -76,7 +209,6 @@ function typeWriter() {
             setTimeout(type, 100);
         } else {
             heroTitle.innerHTML = text + '<span class="cursor">|</span>';
-            // Remove cursor after completion
             setTimeout(() => {
                 const cursor = document.querySelector('.cursor');
                 if (cursor) {
@@ -150,31 +282,26 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form data
         const formData = new FormData(contactForm);
         const name = formData.get('name');
         const email = formData.get('email');
         const subject = formData.get('subject');
         const message = formData.get('message');
         
-        // Simple validation
         if (!name || !email || !subject || !message) {
             showFormMessage('Please fill in all fields', 'error');
             return;
         }
         
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showFormMessage('Please enter a valid email address', 'error');
             return;
         }
         
-        // Simulate form submission (in real application, this would send to a server)
         showFormMessage('Thank you for your message! I\'ll get back to you soon.', 'success');
         contactForm.reset();
         
-        // In a real application, you would send the data to a server here
         console.log('Form submitted:', { name, email, subject, message });
     });
 }
@@ -185,7 +312,6 @@ function showFormMessage(message, type) {
         formMessage.className = `form-message ${type}`;
         formMessage.style.display = 'block';
         
-        // Hide message after 5 seconds
         setTimeout(() => {
             formMessage.style.display = 'none';
         }, 5000);
@@ -201,14 +327,26 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Project Card Hover Effect
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-15px) scale(1.02)';
+// Project Card 3D Hover Effect (Mouse Tracking)
+document.querySelectorAll('.project-card-3d').forEach(cardContainer => {
+    const card = cardContainer.querySelector('.project-card');
+    
+    cardContainer.addEventListener('mousemove', function(e) {
+        const rect = cardContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
     
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
+    cardContainer.addEventListener('mouseleave', function() {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
     });
 });
 
@@ -262,7 +400,7 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// Theme Toggle (Optional Feature)
+// Theme Toggle
 function createThemeToggle() {
     const themeToggle = document.createElement('button');
     themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
@@ -333,7 +471,6 @@ window.addEventListener('load', () => {
         </div>
     `;
     
-    // Add keyframes for spinning animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes spin {
@@ -345,7 +482,6 @@ window.addEventListener('load', () => {
     
     document.body.appendChild(loader);
     
-    // Remove loader after content is loaded
     setTimeout(() => {
         loader.style.opacity = '0';
         setTimeout(() => {
@@ -374,16 +510,15 @@ document.querySelectorAll('.contact-item').forEach(item => {
     }
 });
 
-// Add keyboard navigation
+// Keyboard Navigation
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        // Close mobile menu if open
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
     }
 });
 
-// Performance optimization - Debounce scroll events
+// Performance Optimization - Debounce
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -396,20 +531,31 @@ function debounce(func, wait) {
     };
 }
 
-// Apply debounce to scroll events
 const optimizedScroll = debounce(() => {
     // Scroll-related functions here
 }, 10);
 
 window.addEventListener('scroll', optimizedScroll);
 
-// Error handling for images
+// Image Error Handling
 document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
         this.src = 'https://via.placeholder.com/300x300/6b7280/FFFFFF?text=Image+Not+Found';
     });
 });
 
+// Initialize 3D Effects
+window.addEventListener('load', () => {
+    try {
+        init3DBackground();
+    } catch (e) {
+        console.log('3D Background initialization skipped', e);
+    }
+    
+    create3DParticles();
+});
+
 // Console welcome message
-console.log('%c👋 Welcome to Aditya Kumar\'s Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
-console.log('%cFeel free to explore the projects and get in touch!', 'font-size: 14px; color: #6b7280;');
+console.log('%c🎨 Welcome to Robert\'s 3D Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+console.log('%c✨ Hover over elements to see 3D effects!', 'font-size: 14px; color: #667eea;');
+console.log('%cFeel free to explore the interactive 3D animations!', 'font-size: 14px; color: #6b7280;');
