@@ -497,7 +497,20 @@ window.addEventListener('load', () => {
     }, 1000);
 });
 
-// Copy Email Functionality
+// Enhanced Scroll Animations
+const scrollObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.scroll-reveal').forEach(element => {
+    scrollObserver.observe(element);
+});
+
 document.querySelectorAll('.contact-item').forEach(item => {
     if (item.textContent.includes('@')) {
         item.style.cursor = 'pointer';
