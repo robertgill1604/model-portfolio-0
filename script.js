@@ -719,6 +719,590 @@ function initScrollTextAnimations() {
 
 initScrollTextAnimations();
 
+// ============================================
+// SCROLL PROGRESS INDICATOR
+// ============================================
+
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+    
+    let progressTicking = false;
+    
+    function updateProgress() {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.pageYOffset / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+        progressTicking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        if (!progressTicking) {
+            window.requestAnimationFrame(updateProgress);
+            progressTicking = true;
+        }
+    }, { passive: true });
+}
+
+// ============================================
+// CURSOR TRAIL EFFECT
+// ============================================
+
+function initCursorTrail() {
+    let lastTime = 0;
+    const throttleTime = 50;
+    
+    document.addEventListener('mousemove', (e) => {
+        const currentTime = Date.now();
+        if (currentTime - lastTime < throttleTime) return;
+        lastTime = currentTime;
+        
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => {
+            trail.remove();
+        }, 800);
+    }, { passive: true });
+}
+
+// ============================================
+// ENHANCED SCROLL ANIMATIONS
+// ============================================
+
+function initEnhancedScrollAnimations() {
+    const animationTypes = {
+        'fade-in': { opacity: 0 },
+        'slide-in-up': { opacity: 0, transform: 'translateY(40px)' },
+        'slide-in-left': { opacity: 0, transform: 'translateX(-40px)' },
+        'slide-in-right': { opacity: 0, transform: 'translateX(40px)' },
+        'zoom-in': { opacity: 0, transform: 'scale(0.9)' }
+    };
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                requestAnimationFrame(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'none';
+                });
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    Object.keys(animationTypes).forEach(type => {
+        document.querySelectorAll(`[data-scroll-effect="${type}"]`).forEach(el => {
+            Object.assign(el.style, animationTypes[type]);
+            el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            scrollObserver.observe(el);
+        });
+    });
+}
+
+// ============================================
+// STAGGER ANIMATIONS FOR ELEMENTS
+// ============================================
+
+function initStaggerAnimations() {
+    const staggerGroups = [
+        { selector: '.project-card-3d', animation: 'animate-fadeInUp', baseDelay: 100 },
+        { selector: '.skill-category', animation: 'animate-fadeInLeft', baseDelay: 150 },
+        { selector: '.timeline-item', animation: 'animate-fadeInRight', baseDelay: 200 },
+        { selector: '.stat', animation: 'animate-scaleIn', baseDelay: 100 }
+    ];
+    
+    const staggerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const elements = entry.target.querySelectorAll('[data-stagger]');
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        requestAnimationFrame(() => {
+                            el.classList.add(el.dataset.animation || 'animate-fadeInUp');
+                            el.style.opacity = '1';
+                        });
+                    }, index * parseInt(el.dataset.staggerDelay || 100));
+                });
+                staggerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('[data-stagger-group]').forEach(group => {
+        staggerObserver.observe(group);
+    });
+}
+
+// ============================================
+// RIPPLE EFFECT ON BUTTONS
+// ============================================
+
+function initRippleEffect() {
+    document.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+}
+
+// ============================================
+// ANIMATED NUMBER COUNTERS
+// ============================================
+
+function initAnimatedCounters() {
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = entry.target;
+                const finalValue = parseFloat(target.dataset.count);
+                const duration = 2000;
+                const increment = finalValue / (duration / 16);
+                let current = 0;
+                
+                function updateCounter() {
+                    current += increment;
+                    if (current < finalValue) {
+                        target.textContent = Math.ceil(current) + (target.dataset.suffix || '+');
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        target.textContent = finalValue + (target.dataset.suffix || '+');
+                    }
+                }
+                
+                updateCounter();
+                counterObserver.unobserve(target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    document.querySelectorAll('[data-count]').forEach(counter => {
+        counterObserver.observe(counter);
+    });
+}
+
+// ============================================
+// PARALLAX TEXT EFFECTS
+// ============================================
+
+function initParallaxText() {
+    const parallaxElements = document.querySelectorAll('[data-parallax]');
+    let parallaxTicking = false;
+    
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach(el => {
+            const speed = parseFloat(el.dataset.parallax || 0.5);
+            const yPos = -(scrolled * speed);
+            el.style.transform = `translateY(${yPos}px)`;
+        });
+        
+        parallaxTicking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        if (!parallaxTicking) {
+            window.requestAnimationFrame(updateParallax);
+            parallaxTicking = true;
+        }
+    }, { passive: true });
+}
+
+// ============================================
+// MAGNETIC BUTTONS EFFECT
+// ============================================
+
+function initMagneticButtons() {
+    const buttons = document.querySelectorAll('.btn, .social-link, .social-icon');
+    
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transition = 'transform 0.1s ease';
+        });
+        
+        button.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            this.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transition = 'transform 0.3s ease';
+            this.style.transform = 'translate(0, 0)';
+        });
+    });
+}
+
+// ============================================
+// TEXT REVEAL ANIMATIONS
+// ============================================
+
+function initTextReveal() {
+    const textElements = document.querySelectorAll('[data-text-reveal]');
+    
+    const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const text = entry.target.textContent;
+                const words = text.split(' ');
+                entry.target.textContent = '';
+                entry.target.style.opacity = '1';
+                
+                words.forEach((word, index) => {
+                    const span = document.createElement('span');
+                    span.textContent = word + ' ';
+                    span.style.opacity = '0';
+                    span.style.display = 'inline-block';
+                    span.style.animation = `fadeInUp 0.6s ease-out ${index * 0.05}s forwards`;
+                    entry.target.appendChild(span);
+                });
+                
+                textObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    textElements.forEach(el => {
+        el.style.opacity = '0';
+        textObserver.observe(el);
+    });
+}
+
+// ============================================
+// SKILL BAR PERCENTAGE DISPLAY
+// ============================================
+
+function initSkillPercentages() {
+    document.querySelectorAll('.skill-item').forEach(item => {
+        const progressBar = item.querySelector('.skill-progress');
+        const percentage = progressBar.style.width;
+        
+        const percentSpan = document.createElement('span');
+        percentSpan.className = 'skill-percentage';
+        percentSpan.textContent = percentage;
+        percentSpan.style.cssText = `
+            position: absolute;
+            right: 0;
+            top: -25px;
+            font-size: 0.85rem;
+            color: #a78bfa;
+            font-weight: 600;
+        `;
+        
+        item.style.position = 'relative';
+        item.insertBefore(percentSpan, item.firstChild);
+    });
+}
+
+// ============================================
+// SCROLL TO TOP BUTTON
+// ============================================
+
+function initScrollToTop() {
+    const scrollBtn = document.createElement('div');
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    document.body.appendChild(scrollBtn);
+    
+    let scrollTicking = false;
+    
+    function checkScroll() {
+        if (window.pageYOffset > 300) {
+            scrollBtn.classList.add('visible');
+        } else {
+            scrollBtn.classList.remove('visible');
+        }
+        scrollTicking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+            window.requestAnimationFrame(checkScroll);
+            scrollTicking = true;
+        }
+    }, { passive: true });
+    
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// ============================================
+// ANIMATED BACKGROUND GRADIENT
+// ============================================
+
+function initAnimatedGradients() {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const currentBg = window.getComputedStyle(section).backgroundColor;
+        if (currentBg && currentBg !== 'rgba(0, 0, 0, 0)') {
+            section.style.backgroundSize = '400% 400%';
+        }
+    });
+}
+
+// ============================================
+// INTERSECTION OBSERVER FOR LAZY ANIMATIONS
+// ============================================
+
+function initLazyAnimations() {
+    const lazyElements = document.querySelectorAll('[data-animate]');
+    
+    const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const animationClass = entry.target.dataset.animate;
+                entry.target.classList.add(animationClass);
+                lazyObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+    
+    lazyElements.forEach(el => lazyObserver.observe(el));
+}
+
+// ============================================
+// SMOOTH REVEAL FOR IMAGES
+// ============================================
+
+function initImageReveal() {
+    const images = document.querySelectorAll('img');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.style.opacity = '0';
+                img.style.transform = 'scale(0.95)';
+                
+                img.addEventListener('load', () => {
+                    requestAnimationFrame(() => {
+                        img.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        img.style.opacity = '1';
+                        img.style.transform = 'scale(1)';
+                    });
+                });
+                
+                if (img.complete) {
+                    requestAnimationFrame(() => {
+                        img.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        img.style.opacity = '1';
+                        img.style.transform = 'scale(1)';
+                    });
+                }
+                
+                imageObserver.unobserve(img);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// ============================================
+// FORM SUBMISSION ANIMATION
+// ============================================
+
+function enhanceFormSubmission() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    
+    form.addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+        this.classList.add('submitting');
+        
+        setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            this.classList.remove('submitting');
+        }, 3000);
+    });
+}
+
+// ============================================
+// DYNAMIC PARTICLE BACKGROUND
+// ============================================
+
+function initDynamicParticles() {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'dynamic-particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 4 + 2}px;
+            height: ${Math.random() * 4 + 2}px;
+            background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.2});
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            pointer-events: none;
+            animation: float ${Math.random() * 10 + 10}s ease-in-out infinite;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        hero.appendChild(particle);
+    }
+}
+
+// ============================================
+// KEYBOARD SHORTCUTS
+// ============================================
+
+function initKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key.toLowerCase()) {
+                case 'h':
+                    e.preventDefault();
+                    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'p':
+                    e.preventDefault();
+                    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'c':
+                    e.preventDefault();
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    break;
+            }
+        }
+        
+        if (e.key === 'Home' && e.ctrlKey) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        if (e.key === 'End' && e.ctrlKey) {
+            e.preventDefault();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    });
+}
+
+// ============================================
+// HOVER SOUND EFFECTS (OPTIONAL)
+// ============================================
+
+function initHoverEffects() {
+    const hoverElements = document.querySelectorAll('.btn, .project-card, .skill-category');
+    
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        });
+        
+        el.addEventListener('mouseleave', function() {
+            this.style.transition = 'all 0.3s ease';
+        });
+    });
+}
+
+// ============================================
+// TEXT GLITCH EFFECT (for special elements)
+// ============================================
+
+function initGlitchEffect() {
+    const glitchElements = document.querySelectorAll('[data-glitch]');
+    
+    glitchElements.forEach(el => {
+        el.addEventListener('mouseenter', function() {
+            const originalText = this.textContent;
+            const chars = '!<>-_\\/[]{}—=+*^?#________';
+            let iterations = 0;
+            
+            const interval = setInterval(() => {
+                this.textContent = originalText
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iterations) {
+                            return originalText[index];
+                        }
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join('');
+                
+                if (iterations >= originalText.length) {
+                    clearInterval(interval);
+                }
+                
+                iterations += 1 / 3;
+            }, 30);
+        });
+    });
+}
+
+// ============================================
+// INITIALIZE ALL ANIMATIONS
+// ============================================
+
+function initAllAnimations() {
+    initScrollProgress();
+    initScrollToTop();
+    
+    if (!window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        initCursorTrail();
+        initMagneticButtons();
+    }
+    
+    initEnhancedScrollAnimations();
+    initStaggerAnimations();
+    initRippleEffect();
+    initAnimatedCounters();
+    initParallaxText();
+    initTextReveal();
+    initSkillPercentages();
+    initAnimatedGradients();
+    initLazyAnimations();
+    initImageReveal();
+    enhanceFormSubmission();
+    initDynamicParticles();
+    initKeyboardShortcuts();
+    initHoverEffects();
+    initGlitchEffect();
+}
+
+// Initialize all animations when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllAnimations);
+} else {
+    initAllAnimations();
+}
+
 // Console welcome message
 console.log('%c🎨 Welcome to Robert\'s 3D Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
 console.log('%c✨ Hover over elements to see 3D effects!', 'font-size: 14px; color: #667eea;');
