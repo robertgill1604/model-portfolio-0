@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Demo - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .demo-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .demo-title {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .demo-subtitle {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .device-info {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .device-info h3 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .device-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4f46e5;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+        
+        .features {
+            text-align: left;
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .features h3 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: 2rem;
+            }
+            
+            .demo-title {
+                font-size: 2rem;
+            }
+            
+            .device-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .demo-container {
+                padding: 1.5rem;
+            }
+            
+            .demo-title {
+                font-size: 1.8rem;
+            }
+            
+            .demo-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">🎨 Responsive Portfolio</h1>
+        <p class="demo-subtitle">
+            This portfolio website is fully responsive and optimized for all devices. 
+            Resize your browser or view on different devices to see the responsive design in action!
+        </p>
+        
+        <div class="device-info">
+            <h3>📱 Your Current Device</h3>
+            <div class="device-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Screen Width</div>
+                    <div class="stat-value" id="screenWidth">-</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Screen Height</div>
+                    <div class="stat-value" id="screenHeight">-</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Device Type</div>
+                    <div class="stat-value" id="deviceType">-</div>
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="cta-button">🚀 View Portfolio</a>
+        
+        <div class="features">
+            <h3>✨ Responsive Features</h3>
+            <ul class="feature-list">
+                <li>Mobile-first design approach</li>
+                <li>Flexible grid layouts using CSS Grid and Flexbox</li>
+                <li>Responsive typography scaling</li>
+                <li>Touch-friendly navigation</li>
+                <li>Optimized images and media queries</li>
+                <li>Hamburger menu for mobile devices</li>
+                <li>Adaptive padding and margins</li>
+                <li>Performance optimized animations</li>
+                <li>Cross-browser compatibility</li>
+                <li>Accessibility-focused design</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function updateDeviceInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const deviceType = getDeviceType(width);
+            
+            document.getElementById('screenWidth').textContent = width + 'px';
+            document.getElementById('screenHeight').textContent = height + 'px';
+            document.getElementById('deviceType').textContent = deviceType;
+        }
+        
+        function getDeviceType(width) {
+            if (width <= 575) return 'Mobile (XS)';
+            if (width <= 767) return 'Mobile (S)';
+            if (width <= 991) return 'Tablet (M)';
+            if (width <= 1199) return 'Desktop (L)';
+            return 'Desktop (XL)';
+        }
+        
+        // Update on load and resize
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+        
+        // Add resize animation
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            document.body.style.background = 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)';
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
