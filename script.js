@@ -64,7 +64,7 @@ window.addEventListener('scroll', () => {
 
 // Typing Animation for Hero Title
 function typeWriter() {
-    const text = "Hi, I'm Alex Johnson";
+    const text = "Hi, I'm Aditya Kumar";
     const heroTitle = document.querySelector('.hero-title');
     const textArray = text.split('');
     let index = 0;
@@ -411,5 +411,5 @@ document.querySelectorAll('img').forEach(img => {
 });
 
 // Console welcome message
-console.log('%c👋 Welcome to Alex Johnson\'s Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
+console.log('%c👋 Welcome to Aditya Kumar\'s Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
 console.log('%cFeel free to explore the projects and get in touch!', 'font-size: 14px; color: #6b7280;');
