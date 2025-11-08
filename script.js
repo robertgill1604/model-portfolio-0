@@ -5,86 +5,147 @@
 // Initialize Three.js 3D Background
 function init3DBackground() {
     const canvas = document.getElementById('canvas3d');
-    if (!canvas) return;
+    if (!canvas || typeof THREE === 'undefined') return;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-        75,
+        60,
         window.innerWidth / window.innerHeight,
         0.1,
-        1000
+        100
     );
-    camera.position.z = 5;
+    camera.position.set(0, 0, 12);
 
     const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
+        canvas,
         alpha: true,
         antialias: true
     });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
 
-    // Create 3D Objects
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshPhongMaterial({
-        color: 0x667eea,
-        emissive: 0x764ba2,
-        wireframe: false,
-        transparent: true,
-        opacity: 0.7
-    });
+    const backgroundGroup = new THREE.Group();
+    scene.add(backgroundGroup);
 
-    const cubes = [];
-    for (let i = 0; i < 5; i++) {
-        const cube = new THREE.Mesh(geometry, material);
-        cube.position.x = (Math.random() - 0.5) * 20;
-        cube.position.y = (Math.random() - 0.5) * 20;
-        cube.position.z = (Math.random() - 0.5) * 20;
-        cube.rotation.x = Math.random() * 2 * Math.PI;
-        cube.rotation.y = Math.random() * 2 * Math.PI;
-        scene.add(cube);
-        cubes.push({
-            mesh: cube,
-            rotationSpeed: {
-                x: (Math.random() - 0.5) * 0.01,
-                y: (Math.random() - 0.5) * 0.01,
-                z: (Math.random() - 0.5) * 0.01
-            }
+    const geometries = [
+        new THREE.BoxGeometry(1.2, 1.2, 1.2),
+        new THREE.IcosahedronGeometry(1, 0),
+        new THREE.TorusGeometry(1, 0.3, 24, 64),
+        new THREE.OctahedronGeometry(1),
+        new THREE.TetrahedronGeometry(1.1)
+    ];
+
+    const shapes = [];
+
+    for (let i = 0; i < 7; i++) {
+        const geometry = geometries[i % geometries.length].clone();
+        const material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color('#667eea'),
+            emissive: new THREE.Color('#4f46e5'),
+            metalness: 0.2,
+            roughness: 0.35,
+            transparent: true,
+            opacity: 0.85
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        const basePosition = new THREE.Vector3(
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 6,
+            (Math.random() - 0.5) * 6
+        );
+
+        mesh.position.copy(basePosition);
+        mesh.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+            Math.random() * Math.PI
+        );
+
+        const baseScale = 0.8 + Math.random() * 0.7;
+        mesh.scale.setScalar(baseScale);
+
+        backgroundGroup.add(mesh);
+
+        shapes.push({
+            mesh,
+            basePosition,
+            baseScale,
+            hueOffset: (i * 45 + Math.random() * 20),
+            floatOffset: Math.random() * Math.PI * 2,
+            rotationSpeed: new THREE.Vector3(
+                (Math.random() - 0.5) * 0.01,
+                (Math.random() - 0.5) * 0.01,
+                (Math.random() - 0.5) * 0.01
+            )
         });
     }
 
-    // Add Lights
-    const light1 = new THREE.PointLight(0xfbbf24, 1);
-    light1.position.set(5, 5, 5);
-    scene.add(light1);
-
-    const light2 = new THREE.PointLight(0x667eea, 0.5);
-    light2.position.set(-5, -5, 5);
-    scene.add(light2);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-    scene.add(ambientLight);
-
-    // Mouse position tracking
-    let mouseX = 0;
-    let mouseY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    const lights = [
+        { color: 0xff6b9d, intensity: 1.1 },
+        { color: 0x667eea, intensity: 1 },
+        { color: 0x00d9ff, intensity: 1.2 }
+    ].map((config, index) => {
+        const light = new THREE.PointLight(config.color, config.intensity, 40);
+        light.position.set(Math.cos(index) * 6, Math.sin(index) * 4, 6 - index);
+        scene.add(light);
+        return light;
     });
 
-    // Animation Loop
-    function animate() {
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+
+    const targetRotation = new THREE.Vector2(0, 0);
+    const currentRotation = new THREE.Vector2(0, 0);
+
+    function handleMouseMove(event) {
+        const normalizedX = event.clientX / window.innerWidth;
+        const normalizedY = event.clientY / window.innerHeight;
+
+        targetRotation.x = (normalizedY - 0.5) * 0.8;
+        targetRotation.y = (normalizedX - 0.5) * 0.8;
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    function animate(time = 0) {
         requestAnimationFrame(animate);
+        const elapsed = time * 0.001;
 
-        cubes.forEach(cube => {
-            cube.mesh.rotation.x += cube.rotationSpeed.x;
-            cube.mesh.rotation.y += cube.rotationSpeed.y;
-            cube.mesh.rotation.z += cube.rotationSpeed.z;
+        currentRotation.x += (targetRotation.x - currentRotation.x) * 0.08;
+        currentRotation.y += (targetRotation.y - currentRotation.y) * 0.08;
 
-            cube.mesh.position.x += (mouseX * 10 - cube.mesh.position.x) * 0.01;
-            cube.mesh.position.y += (mouseY * 10 - cube.mesh.position.y) * 0.01;
+        backgroundGroup.rotation.x = currentRotation.x;
+        backgroundGroup.rotation.y = currentRotation.y;
+
+        shapes.forEach((shape) => {
+            const { mesh, basePosition, baseScale, floatOffset, hueOffset, rotationSpeed } = shape;
+
+            mesh.rotation.x += rotationSpeed.x;
+            mesh.rotation.y += rotationSpeed.y;
+            mesh.rotation.z += rotationSpeed.z;
+
+            const floatX = Math.cos(elapsed + floatOffset) * 0.6;
+            const floatY = Math.sin(elapsed * 1.2 + floatOffset) * 0.6;
+            const floatZ = Math.sin(elapsed * 0.8 + floatOffset) * 0.6;
+
+            mesh.position.x = basePosition.x + floatX;
+            mesh.position.y = basePosition.y + floatY;
+            mesh.position.z = basePosition.z + floatZ;
+
+            const scalePulse = baseScale + Math.sin(elapsed * 2 + floatOffset) * 0.2;
+            mesh.scale.setScalar(scalePulse);
+
+            const hue = ((hueOffset + elapsed * 25) % 360) / 360;
+            mesh.material.color.setHSL(hue, 0.7, 0.6);
+            mesh.material.emissive.setHSL((hue + 0.1) % 1, 0.65, 0.45);
+        });
+
+        lights.forEach((light, index) => {
+            light.position.x = Math.cos(elapsed * 0.6 + index * 2) * 7;
+            light.position.y = Math.sin(elapsed * 0.7 + index * 1.5) * 5;
+            light.position.z = Math.sin(elapsed * 0.5 + index) * 6;
         });
 
         renderer.render(scene, camera);
@@ -92,12 +153,13 @@ function init3DBackground() {
 
     animate();
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
+    function handleResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    }
+
+    window.addEventListener('resize', handleResize);
 }
 
 // Create Floating 3D Particles with Enhanced Effects
@@ -116,8 +178,6 @@ function create3DParticles() {
         const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         const duration = Math.random() * 25 + 20;
         const delay = Math.random() * 8;
-        const xDrift = Math.random() * 200 - 100;
-        const yDrift = Math.random() * 300 - 150;
         
         particle.style.cssText = `
             width: ${size}px;
@@ -272,7 +332,7 @@ const animateOnScroll = new IntersectionObserver((entries) => {
 });
 
 // Apply initial styles and observe elements
-document.querySelectorAll('.project-card, .timeline-item, .skill-category, .stat').forEach(el => {
+document.querySelectorAll('.project-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(30px)';
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -323,14 +383,7 @@ function showFormMessage(message, type) {
     }
 }
 
-// Parallax Effect for Hero Section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
+// Hero parallax handled in enhancedParallax()
 
 // Project Card 3D Hover Effect (Mouse Tracking)
 document.querySelectorAll('.project-card-3d').forEach(cardContainer => {
@@ -566,24 +619,42 @@ function init3DScrollAnimations() {
         el.style.opacity = '0';
         el.style.transform = 'perspective(1000px) rotateX(20deg) rotateY(20deg) translateZ(-50px)';
         el.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        el.style.willChange = 'transform, opacity';
         scrollObserver.observe(el);
     });
 }
 
 // Advanced Mouse Tracking for 3D Depth
 function init3DMouseTracking() {
-    document.addEventListener('mousemove', (e) => {
-        const x = e.clientX / window.innerWidth;
-        const y = e.clientY / window.innerHeight;
-        
-        // Apply subtle 3D effect to main sections
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            const rotX = (y - 0.5) * 5;
-            const rotY = (x - 0.5) * 5;
-            section.style.transform = `perspective(1000px) rotateX(${rotX * 0.1}deg) rotateY(${rotY * 0.1}deg)`;
-        });
+    const tiltTargets = document.querySelectorAll('[data-tilt="section"]');
+    if (!tiltTargets.length) return;
+
+    const target = { x: 0, y: 0 };
+    const states = new Map();
+
+    tiltTargets.forEach((element) => {
+        states.set(element, { currentX: 0, currentY: 0 });
+        element.style.transformStyle = 'preserve-3d';
+        element.style.willChange = 'transform';
     });
+
+    window.addEventListener('mousemove', (event) => {
+        target.x = (event.clientX / window.innerWidth - 0.5) * 2;
+        target.y = (event.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    function update() {
+        states.forEach((state, element) => {
+            state.currentX += ((target.y * -3) - state.currentX) * 0.08;
+            state.currentY += ((target.x * 3) - state.currentY) * 0.08;
+
+            element.style.transform = `perspective(1200px) rotateX(${state.currentX}deg) rotateY(${state.currentY}deg)`;
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    update();
 }
 
 // Initialize 3D Effects
