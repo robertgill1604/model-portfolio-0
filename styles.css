@@ -16,6 +16,15 @@ body {
     background-color: #f8fafc;
 }
 
+#canvas3d {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1489,6 +1498,17 @@ section {
     50% {
         transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
     }
+}
+
+[data-scroll="3d"] {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+[data-tilt="section"] {
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 /* Enhanced Section Backgrounds with Animated Gradients */
