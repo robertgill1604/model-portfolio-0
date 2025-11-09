@@ -172,17 +172,17 @@ function create3DParticles() {
         particle.className = 'floating-particle particle-3d';
         
         const size = Math.random() * 6 + 2;
-        const hue = Math.random() * 120 + 200;
+        const hue = Math.random() * 60 + (Math.random() > 0.5 ? 180 : 300);
         const saturation = Math.random() * 50 + 50;
         const lightness = Math.random() * 40 + 50;
         const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         const duration = Math.random() * 25 + 20;
         const delay = Math.random() * 8;
-        
+
         particle.style.cssText = `
             width: ${size}px;
             height: ${size}px;
-            background: radial-gradient(circle at 30% 30%, ${color}, rgba(100, 150, 255, 0.3));
+            background: radial-gradient(circle at 30% 30%, ${color}, rgba(0, 255, 255, 0.2));
             border-radius: 50%;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
