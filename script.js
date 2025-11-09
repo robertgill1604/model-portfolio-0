@@ -137,7 +137,7 @@ function init3DBackground() {
             const scalePulse = baseScale + Math.sin(elapsed * 2 + floatOffset) * 0.2;
             mesh.scale.setScalar(scalePulse);
 
-            const hue = ((hueOffset + elapsed * 25) % 360) / 360;
+            const hue = ((hueOffset + elapsed * 30) % 120 + 180) / 360;
             mesh.material.color.setHSL(hue, 0.7, 0.6);
             mesh.material.emissive.setHSL((hue + 0.1) % 1, 0.65, 0.45);
         });
