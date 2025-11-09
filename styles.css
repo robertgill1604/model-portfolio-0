@@ -1730,10 +1730,10 @@ form.submitting button[type="submit"] {
     left: 0;
     width: 0%;
     height: 4px;
-    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    background: linear-gradient(90deg, #00ffff, #ff00ff, #00d4ff);
     z-index: 10000;
     transition: width 0.1s ease-out;
-    box-shadow: 0 0 10px rgba(102, 126, 234, 0.7);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.9), 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
 /* ============================================
