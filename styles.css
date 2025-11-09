@@ -701,12 +701,13 @@ pre {
     content: '';
     position: absolute;
     width: 6px;
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #00ffff 0%, #ff00ff 100%);
     top: 0;
     bottom: 0;
     left: 50%;
     margin-left: -3px;
     border-radius: 3px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
 }
 
 .timeline-item {
