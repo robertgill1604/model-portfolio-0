@@ -197,7 +197,7 @@ body {
     display: flex;
     align-items: center;
     padding: 100px 0 50px;
-    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e3a8a 100%);
+    background: #000000;
     position: relative;
     overflow: hidden;
     will-change: transform;
