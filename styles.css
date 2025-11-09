@@ -801,8 +801,9 @@ pre {
 .timeline-content .date {
     font-size: 0.8rem;
     font-weight: bold;
-    color: #a78bfa;
+    color: #ff00ff;
     margin-bottom: 0.5rem;
+    text-shadow: 0 0 8px #ff00ff;
 }
 
 .contact {
