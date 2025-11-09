@@ -1371,7 +1371,7 @@ textarea.form-input {
 
 .scroll-to-top:hover {
     transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4);
 }
 
 .scroll-to-top i {
