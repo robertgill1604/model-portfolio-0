@@ -1011,8 +1011,9 @@ function initSkillPercentages() {
             right: 0;
             top: -25px;
             font-size: 0.85rem;
-            color: #a78bfa;
+            color: #00ffff;
             font-weight: 600;
+            text-shadow: 0 0 8px #00ffff;
         `;
         
         item.style.position = 'relative';
