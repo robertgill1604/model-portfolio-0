@@ -544,7 +544,7 @@ document.querySelectorAll('.contact-item').forEach(item => {
             navigator.clipboard.writeText(email).then(() => {
                 const originalText = this.innerHTML;
                 this.innerHTML = '<i class="fas fa-check"></i> <span>Email Copied!</span>';
-                this.style.color = '#10b981';
+                this.style.color = '#00ffff';
                 
                 setTimeout(() => {
                     this.innerHTML = originalText;
