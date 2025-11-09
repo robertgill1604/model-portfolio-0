@@ -127,7 +127,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: #d1d5db;
+    color: #e0e0e0;
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
@@ -141,12 +141,13 @@ body {
     height: 2px;
     bottom: -6px;
     left: 50%;
-    background: linear-gradient(90deg, #818cf8, #a78bfa);
+    background: linear-gradient(90deg, #00ffff, #00d4ff);
     transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #818cf8;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
 }
 
 .nav-link:hover::after {
