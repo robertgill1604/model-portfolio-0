@@ -771,24 +771,26 @@ pre {
 
 .timeline-content {
     padding: 20px 30px;
-    background-color: #1e293b;
+    background-color: #0a0a0a;
     position: relative;
     border-radius: 6px;
-    border-left: 5px solid #7c3aed;
+    border-left: 5px solid #00ffff;
+    border: 1px solid #00ffff;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     will-change: transform;
 }
 
 .timeline-content:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-left-color: #a78bfa;
+    box-shadow: 0 8px 16px rgba(0, 255, 255, 0.4), 0 0 30px rgba(0, 255, 255, 0.3);
+    border-color: #ff00ff;
 }
 
 .timeline-content h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: #d8b4fe;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
 }
 
 .timeline-content p {
