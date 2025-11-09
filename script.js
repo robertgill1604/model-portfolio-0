@@ -1305,6 +1305,6 @@ if (document.readyState === 'loading') {
 }
 
 // Console welcome message
-console.log('%c🎨 Welcome to Robert\'s 3D Portfolio!', 'font-size: 20px; font-weight: bold; color: #4f46e5;');
-console.log('%c✨ Hover over elements to see 3D effects!', 'font-size: 14px; color: #667eea;');
-console.log('%cFeel free to explore the interactive 3D animations!', 'font-size: 14px; color: #6b7280;');
+console.log('%c🎨 Welcome to Robert\'s Cyberpunk Portfolio!', 'font-size: 20px; font-weight: bold; color: #00ffff; text-shadow: 0 0 10px #00ffff;');
+console.log('%c✨ Hover over elements to see neon effects!', 'font-size: 14px; color: #ff00ff;');
+console.log('%cFeel free to explore the cyberpunk animations!', 'font-size: 14px; color: #00d4ff;');
