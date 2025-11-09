@@ -174,9 +174,10 @@ body {
 .bar {
     width: 25px;
     height: 3px;
-    background-color: #d1d5db;
+    background-color: #00ffff;
     margin: 3px 0;
     transition: 0.3s;
+    box-shadow: 0 0 5px #00ffff;
 }
 
 .hamburger.active .bar:nth-child(1) {
