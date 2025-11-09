@@ -506,9 +506,11 @@ section {
 .stat {
     text-align: center;
     padding: 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
     border-radius: 15px;
     color: white;
+    border: 2px solid #00ffff;
+    animation: border-glow-cyan 2s ease-in-out infinite;
 }
 
 .stat h3 {
