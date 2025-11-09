@@ -1350,7 +1350,7 @@ textarea.form-input {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
     color: white;
     display: flex;
     align-items: center;
@@ -1359,7 +1359,7 @@ textarea.form-input {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 5px 20px rgba(0, 255, 255, 0.5);
     z-index: 999;
     animation: float 3s ease-in-out infinite;
 }
