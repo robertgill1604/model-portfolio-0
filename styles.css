@@ -881,9 +881,11 @@ textarea.form-input {
 }
 
 .footer {
-    background-color: #0f172a;
+    background-color: #000000;
     padding: 50px 0;
     text-align: center;
+    border-top: 2px solid #00ffff;
+    box-shadow: 0 -2px 20px rgba(0, 255, 255, 0.2);
 }
 
 .footer-content {
