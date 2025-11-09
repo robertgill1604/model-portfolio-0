@@ -5,15 +5,17 @@
 }
 
 .project-card {
-    background: #1e293b;
+    background: #0a0a0a;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 2px solid #ff00ff;
+    box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3), 0 0 30px rgba(255, 0, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
     will-change: transform;
+    animation: border-glow-magenta 4s ease-in-out infinite;
 }
 
 .project-card:hover {
