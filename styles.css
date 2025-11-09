@@ -749,7 +749,7 @@ pre {
     right: 30px;
     border: medium solid white;
     border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent #1e293b;
+    border-color: transparent transparent transparent #0a0a0a;
 }
 
 .timeline-item.right::before {
@@ -762,7 +762,7 @@ pre {
     left: 30px;
     border: medium solid white;
     border-width: 10px 10px 10px 0;
-    border-color: transparent #1e293b transparent transparent;
+    border-color: transparent #0a0a0a transparent transparent;
 }
 
 .timeline-item.right::after {
