@@ -492,7 +492,7 @@ window.addEventListener('load', () => {
     
     loader.innerHTML = `
         <div style="text-align: center; color: white;">
-            <div style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+            <div style="width: 50px; height: 50px; border: 3px solid rgba(0, 255, 255, 0.3); border-top: 3px solid #00ffff; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);"></div>
             <p style="font-size: 1.2rem; font-weight: 500;">Loading Portfolio...</p>
         </div>
     `;
