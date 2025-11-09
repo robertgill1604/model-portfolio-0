@@ -869,15 +869,15 @@ textarea.form-input {
 }
 
 .form-message.success {
-    background-color: rgba(52, 211, 153, 0.1);
-    color: #34d399;
-    border: 1px solid #34d399;
+    background-color: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    border: 1px solid #00ffff;
 }
 
 .form-message.error {
-    background-color: rgba(248, 113, 113, 0.1);
-    color: #f87171;
-    border: 1px solid #f87171;
+    background-color: rgba(255, 0, 255, 0.1);
+    color: #ff00ff;
+    border: 1px solid #ff00ff;
 }
 
 .footer {
