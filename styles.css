@@ -156,13 +156,13 @@ body {
 }
 
 .nav-link.active {
-    color: #fbbf24;
+    color: #00ffff;
 }
 
 .nav-link.active::after {
     width: 100%;
     left: 0;
-    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    background: linear-gradient(90deg, #00ffff, #00d4ff);
 }
 
 .hamburger {
