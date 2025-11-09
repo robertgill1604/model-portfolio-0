@@ -677,13 +677,14 @@ pre {
 
 .project-links a {
     text-decoration: none;
-    color: #facc15;
+    color: #00ffff;
     margin-right: 1rem;
     transition: color 0.3s ease;
+    text-shadow: 0 0 8px #00ffff;
 }
 
 .project-links a:hover {
-    color: #fbbf24;
+    color: #00d4ff;
 }
 
 .education {
