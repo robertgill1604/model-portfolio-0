@@ -530,10 +530,11 @@ section {
 }
 
 .code-block {
-    background: #1e293b;
+    background: #0a0a0a;
     border-radius: 15px;
     padding: 1.5rem;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border: 2px solid #ff00ff;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 0, 255, 0.4);
     width: 100%;
     max-width: 500px;
 }
