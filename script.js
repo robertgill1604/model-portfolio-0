@@ -438,7 +438,7 @@ function createThemeToggle() {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #00ffff 0%, #ff00ff 100%);
         color: white;
         border: none;
         cursor: pointer;
