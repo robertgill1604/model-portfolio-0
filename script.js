@@ -83,9 +83,9 @@ function init3DBackground() {
     }
 
     const lights = [
-        { color: 0xff6b9d, intensity: 1.1 },
-        { color: 0x667eea, intensity: 1 },
-        { color: 0x00d9ff, intensity: 1.2 }
+        { color: 0xff00ff, intensity: 1.2 },
+        { color: 0x00ffff, intensity: 1.3 },
+        { color: 0x00d4ff, intensity: 1.1 }
     ].map((config, index) => {
         const light = new THREE.PointLight(config.color, config.intensity, 40);
         light.position.set(Math.cos(index) * 6, Math.sin(index) * 4, 6 - index);
