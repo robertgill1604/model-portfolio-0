@@ -41,8 +41,8 @@ function init3DBackground() {
     for (let i = 0; i < 7; i++) {
         const geometry = geometries[i % geometries.length].clone();
         const material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color('#667eea'),
-            emissive: new THREE.Color('#4f46e5'),
+            color: new THREE.Color('#00ffff'),
+            emissive: new THREE.Color('#00d4ff'),
             metalness: 0.2,
             roughness: 0.35,
             transparent: true,
