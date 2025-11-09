@@ -707,7 +707,7 @@ function initScrollTextAnimations() {
     const textObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.animation = 'neon-glow 3s ease-in-out infinite';
+                entry.target.style.animation = 'neon-pulse-cyan 3s ease-in-out infinite';
             }
         });
     }, { threshold: 0.5 });
