@@ -562,8 +562,8 @@ section {
 .dot-3 { background-color: #34d399; }
 
 pre {
-    background-color: #0f172a;
-    color: #d1d5db;
+    background-color: #000000;
+    color: #e0e0e0;
     padding: 1rem;
     border-radius: 8px;
     font-family: 'Fira Code', monospace;
