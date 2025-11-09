@@ -334,24 +334,24 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 255, 255, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     text-decoration: none;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 255, 0.3);
     font-size: 0.9rem;
     will-change: transform;
 }
 
 .social-link:hover {
-    background-color: rgba(129, 140, 248, 0.2);
+    background-color: rgba(0, 255, 255, 0.2);
     transform: translateY(-3px) scale(1.05);
-    border-color: rgba(129, 140, 248, 0.5);
-    color: #818cf8;
-    box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+    border-color: rgba(0, 255, 255, 0.6);
+    color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
 }
 
 .hero-image {
