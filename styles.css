@@ -645,7 +645,8 @@ pre {
 .project-title {
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
-    color: #c084fc;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff;
 }
 
 .project-description {
